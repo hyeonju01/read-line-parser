@@ -5,14 +5,9 @@ import com.line.domain.User;
 import java.sql.*;
 import java.util.Map;
 
-public class UserDao {
+public abstract class UserDaoAbstract {
 
-    private Connection makeConnection() throws SQLException{
-        Map<String, String> env = System.getenv();
-        Connection c = DriverManager.getConnection(env.get("DB_HOST"),
-                env.get("DB_USER"), env.get("DB_PASSWORD"));
-        return c;
-    }
+    public abstract Connection makeConnection() throws SQLException;
 
     public void add() {
         Map<String, String> env = System.getenv();
@@ -51,10 +46,10 @@ public class UserDao {
     public User findById(String id) {
         Map<String, String> env = System.getenv();
         Connection conn;
+
         try {
             //Class.forName("com.mysql.cj.jdbc.Driver");
             conn = makeConnection();
-
             PreparedStatement ps = conn.prepareStatement(
                     "SELECT id, name, password FROM users WHERE id = ?"
             );
@@ -77,7 +72,7 @@ public class UserDao {
     }
 
     public static void main(String[] args) throws SQLException, ClassNotFoundException {
-//        UserDao userDao = new UserDao();
+//        UserDaoAbstract userDao = new UserDaoAbstract();
 //        User user = userDao.findById("1");
 //        System.out.println(user.getName());
     }
