@@ -1,13 +1,8 @@
 package com.line;
 
-import com.line.domain.Patient;
 import com.line.parser.Parser;
 
-import javax.sound.sampled.Line;
 import java.io.*;
-import java.nio.charset.StandardCharsets;
-import java.nio.file.Files;
-import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -38,6 +33,20 @@ public class LineReader<T> {
         return result;
     }
 
+    public void writeLines(List<String> lines, String filename){
+        File file = new File(filename);
+        try{
+            BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(
+                    new FileOutputStream(file), "utf-8"));
+            for (String str : lines){
+                bw.write(str);
+            }
+            bw.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
 
     //createAFile
     public void createANewFile(String filename) throws IOException {
@@ -47,6 +56,7 @@ public class LineReader<T> {
     }
 
     //write code
+
 
 
 

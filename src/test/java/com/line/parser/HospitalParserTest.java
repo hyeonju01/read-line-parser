@@ -61,7 +61,6 @@ class HospitalParserTest {
     @Test
     @DisplayName("insert 쿼리를 잘 만드는지")
     void makeSqlQueryTest() {
-
         HospitalParser hospitalParser = new HospitalParser();
         Hospital hospital = hospitalParser.parse(this.line1);
         String sql = "INSERT INTO `likelion_db`.`seoul_hospital`\n" +

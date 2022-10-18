@@ -6,6 +6,7 @@ import com.line.parser.HospitalParser;
 
 import javax.sound.sampled.Line;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 public class main {
@@ -14,16 +15,15 @@ public class main {
         String filename= "/Users/hyeonju/Downloads/seoul_hospitals_infos.csv";
         List<Hospital> hospitals = hospitalLineReader.readLines(filename);
 
-        System.out.println(hospitals.size());
+        List<String> sqlStatements = new ArrayList<>();
 
         for(Hospital hospital : hospitals) {
-            //System.out.println(hospital.getId());
-            System.out.printf("%s,%s,%s,%s,%d,%s,%s\n",
-                    hospital.getId(), hospital.getAddress(), hospital.getDistrict(),
-                    hospital.getCategory(),hospital.getEmergencyRoom(),hospital.getName(),
-                    hospital.getSubdivision()); //반드시 개행 문자 추가..^^
+            sqlStatements.add(hospital.getSqlInsertQuery());
         }
 
+        String sqlFilename =  "seoul_hospital_insert.sql";
+        hospitalLineReader.createANewFile(sqlFilename);
+        hospitalLineReader.writeLines(sqlStatements, sqlFilename);
 
     }
 }
